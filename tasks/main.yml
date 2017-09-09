@@ -16,4 +16,3 @@
     name: "{{ rabbitmq_daemon }}"
     state: "{{ rabbitmq_state }}"
     enabled: "{{ rabbitmq_enabled }}"
-  when: nfs_exports|length
