@@ -1,15 +1,11 @@
 ---
-- name: Add packagecloud GPG key.
+- name: Add official RabbitMQ GPG key.
   rpm_key:
-    key: "https://packagecloud.io/gpg.key"
+    key: "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc"
     state: present
 
-- name: Download RabbitMQ package.
-  get_url:
-    url: "{{ rabbitmq_rpm_url }}"
-    dest: "/tmp/{{ rabbitmq_rpm }}"
-
-- name: Ensure RabbitMQ is installed.
+- name: Install RabbitMQ from RabbitMQ Repository
   yum:
-    name: "/tmp/{{ rabbitmq_rpm }}"
-    state: "present"
+    name: "{{ rabbitmq_rpm_url }}"
+    state: present
+
