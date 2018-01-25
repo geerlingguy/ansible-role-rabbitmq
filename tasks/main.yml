@@ -1,8 +1,11 @@
 ---
-- name: Ensure erlang is installed.
+- name: Ensure erlang and socat is installed.
   package:
-    name: erlang
+    name: "{{ item }}"
     state: present
+   with_items:
+    - erlang
+    - socat
 
 # Setup/install tasks.
 - include: setup-RedHat.yml
