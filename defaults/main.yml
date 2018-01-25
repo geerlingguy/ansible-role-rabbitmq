@@ -7,7 +7,7 @@ rabbitmq_version: "3.7.2"
 
 rabbitmq_baseurl: https://dl.bintray.com/rabbitmq/all/rabbitmq-server
 rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
-rabbitmq_rpm_url: "{{rabbitmq_baseurl}}/{{ rabbitmq_version }}/{{ rabbitmq_rpm }}/download"
+rabbitmq_rpm_url: "{{rabbitmq_baseurl}}/{{ rabbitmq_version }}/{{ rabbitmq_rpm }}"
 
 rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
 rabbitmq_deb_url: "{{rabbitmq_baseurl}}/{{ rabbitmq_deb }}"
