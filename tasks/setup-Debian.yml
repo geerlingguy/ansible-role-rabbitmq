@@ -1,5 +1,0 @@
----
-- name: Ensure RabbitMQ is installed.
-  apt:
-    deb: "{{ rabbitmq_deb_url }}"
-    state: present
