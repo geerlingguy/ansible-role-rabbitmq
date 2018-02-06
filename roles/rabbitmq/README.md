@@ -12,9 +12,19 @@ Installs RabbitMQ on Linux.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    TODO
+### Default Values
+    rabbitmq_daemon: rabbitmq-server
+    rabbitmq_state: started
+    rabbitmq_enabled: yes
 
-TODO.
+    rabbitmq_version: "3.6.11"
+
+    rabbitmq_baseurl: https://dl.bintray.com/rabbitmq/all/rabbitmq-server
+    rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
+    
+    rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
+
+There are currently no available variables outside of the default values.
 
 ## Dependencies
 
