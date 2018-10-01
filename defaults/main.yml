@@ -3,7 +3,7 @@ rabbitmq_daemon: rabbitmq-server
 rabbitmq_state: started
 rabbitmq_enabled: true
 
-rabbitmq_version: "3.6.11"
+rabbitmq_version: "3.6.16"
 
 rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
 rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"

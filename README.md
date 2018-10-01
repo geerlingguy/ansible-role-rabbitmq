@@ -12,9 +12,25 @@ Installs RabbitMQ on Linux.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    TODO
+    rabbitmq_daemon: rabbitmq-server
+    rabbitmq_state: started
+    rabbitmq_enabled: true
 
-TODO.
+Controls the RabbitMQ daemon's state and whether it starts at boot.
+
+    rabbitmq_version: "3.6.16"
+
+The RabbitMQ version to install.
+
+    rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
+    rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+
+(RedHat/CentOS only) Controls the .rpm to install.
+
+    rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
+    rabbitmq_deb_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}/{{ rabbitmq_deb }}/download"
+
+(Debian/Ubuntu only) Controls the .deb to install.
 
 ## Dependencies
 
