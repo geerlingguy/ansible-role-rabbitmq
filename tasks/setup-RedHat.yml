@@ -1,6 +1,4 @@
 ---
-- debug: var=packagecloud_repository_url
-
 - name: Get packagecloud erlang repository
   get_url:
     url: "{{ erlang_yum_repository_url }}"
