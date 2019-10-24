@@ -18,14 +18,20 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
-    rabbitmq_version: "3.6.16"
+    rabbitmq_version: "3.8.0"
 
 The RabbitMQ version to install.
 
-    rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
-    rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+    rabbitmq_basename: "rabbitmq-server"
 
-(RedHat/CentOS only) Controls the .rpm to install.
+(RedHat/CentOS only) The RabbitMQ package basename.
+    
+    erlang_yum_repository_url: "https://packagecloud.io/install/repositories/rabbitmq/erlang/config_file.repo?os={{ansible_distribution | lower}}&dist={{ ansible_distribution_major_version }}&source=script"
+    rabbitmq_yum_repository_url: "https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/config_file.repo?os={{ansible_distribution | lower}}&dist={{ansible_distribution_major_version | lower}}&source=script"
+    erlang_yum_repository_path: "/etc/yum.repos.d/rabbitmq_erlang.repo"
+    rabbitmq_yum_repository_path: "/etc/yum.repos.d/rabbitmq_rabbitmq-server.repo"
+
+(RedHat/CentOS only) Controls the Package Cloud repositories for RabbitMQ and Erlang latest versions
 
     rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
     rabbitmq_deb_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}/{{ rabbitmq_deb }}/download"
