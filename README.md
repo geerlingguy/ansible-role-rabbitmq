@@ -1,6 +1,6 @@
 # Ansible Role: RabbitMQ
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-rabbitmq.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-rabbitmq)
+[![Build Status](https://travis-ci.org/davidalger/ansible-role-rabbitmq.svg?branch=master)](https://travis-ci.org/davidalger/ansible-role-rabbitmq)
 
 Installs RabbitMQ on Linux.
 
@@ -42,7 +42,7 @@ None.
       roles:
         - name: geerlingguy.repo-epel
           when: ansible_os_family == 'RedHat'
-        - geerlingguy.rabbitmq
+        - davidalger.rabbitmq
 
 ## License
 
