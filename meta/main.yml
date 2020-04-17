@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: rabbitmq
   author: geerlingguy
   description: RabbitMQ installation for Linux.
   company: "Midwestern Mac, LLC"
