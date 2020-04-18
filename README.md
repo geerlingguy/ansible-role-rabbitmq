@@ -6,7 +6,7 @@ Installs RabbitMQ on Linux.
 
 ## Requirements
 
-(Red Hat / CentOS only) Requires the EPEL repository, which can be installed with the `geerlingguy.repo-epel` role.
+No external dependencies.
 
 ## Role Variables
 
@@ -50,8 +50,6 @@ None.
 
     - hosts: rabbitmq
       roles:
-        - name: geerlingguy.repo-epel
-          when: ansible_os_family == 'RedHat'
         - geerlingguy.rabbitmq
 
 ## License
