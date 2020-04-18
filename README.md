@@ -37,6 +37,9 @@ The Erlang version to install.
     rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
     rabbitmq_deb_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}/{{ rabbitmq_deb }}/download"
 
+    erlang_deb: "erlang-{{ item }}_{{ erlang_version }}-1_amd64.deb"
+    erlang_deb_url: "https://bintray.com/rabbitmq-erlang/debian/download_file?file_path=pool%2Ferlang%2F{{ erlang_version }}-1%2F{{ ansible_distribution | lower }}%2F{{ ansible_distribution_release }}%2Ferlang-{{ item }}_{{ erlang_version }}-1_amd64.deb"
+
 (Debian/Ubuntu only) Controls the .deb to install.
 
 ## Dependencies
