@@ -1,4 +1,21 @@
 ---
+- name: Add RabbitMQ GPG signing key.
+  apt_key:
+    url: "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc"
+    state: present
+
+- name: Download Erlang packages.
+  get_url:
+    url: "{{ erlang_deb_url }}"
+    dest: "/tmp/{{ erlang_deb }}"
+  with_items: "{{ erlang_deb_packages }}"
+
+- name: Ensure Erlang is installed.
+  apt:
+    deb: "/tmp/{{ erlang_deb }}"
+    state: "present"
+  with_items: "{{ erlang_deb_packages }}"
+
 - name: Download RabbitMQ package.
   get_url:
     url: "{{ rabbitmq_deb_url }}"
