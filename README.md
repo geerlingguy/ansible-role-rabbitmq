@@ -18,12 +18,19 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
-    rabbitmq_version: "3.6.16"
+    rabbitmq_version: "3.8.3"
 
 The RabbitMQ version to install.
 
+    erlang_version: "22.3.2"
+
+The Erlang version to install.
+
     rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
     rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+
+    erlang_rpm: "erlang-{{ erlang_version }}-1.el{{ ansible_distribution_major_version }}.x86_64.rpm"
+    erlang_rpm_url: "https://packagecloud.io/rabbitmq/erlang/packages/el/{{ ansible_distribution_major_version }}/{{ erlang_rpm }}/download"
 
 (RedHat/CentOS only) Controls the .rpm to install.
 
