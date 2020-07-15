@@ -18,11 +18,11 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
-    rabbitmq_version: "3.8.3"
+    rabbitmq_version: "3.8.5"
 
 The RabbitMQ version to install.
 
-    erlang_version: "22.3.2"
+    erlang_version: "23.0.2"
 
 The Erlang version to install.
 
