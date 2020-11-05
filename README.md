@@ -1,6 +1,6 @@
 # Ansible Role: RabbitMQ
 
-[![Build Status](https://travis-ci.com/geerlingguy/ansible-role-rabbitmq.svg?branch=master)](https://travis-ci.com/geerlingguy/ansible-role-rabbitmq)
+[![CI](https://github.com/geerlingguy/ansible-role-rabbitmq/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-rabbitmq/actions?query=workflow%3ACI)
 
 Installs RabbitMQ on Linux.
 
