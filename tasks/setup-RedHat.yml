@@ -1,8 +1,11 @@
 ---
 - name: Add packagecloud GPG key.
   rpm_key:
-    key: "https://packagecloud.io/gpg.key"
+    key: "{{ item }}"
     state: present
+  loop:
+    - "https://packagecloud.io/gpg.key"
+    - "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
 
 - name: Download RabbitMQ package.
   get_url:
