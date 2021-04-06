@@ -1,7 +1,8 @@
 ---
+
 - name: Ensure erlang is installed.
   package:
-    name: erlang
+    name: "{{ rabbitmq_erlang_package }}"
     state: present
 
 # Setup/install tasks.
