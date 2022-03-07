@@ -1,4 +1,9 @@
 ---
+- name: Ensure erlang is installed.
+  package:
+    name: erlang
+    state: present
+
 - name: Add packagecloud GPG key.
   rpm_key:
     key: "https://packagecloud.io/gpg.key"
