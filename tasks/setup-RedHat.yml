@@ -1,4 +1,9 @@
 ---
+- name: Ensure erlang is installed.
+  package:
+    name: erlang
+    state: present
+
 - name: Add GPG keys.
   rpm_key:
     key: "{{ item }}"
