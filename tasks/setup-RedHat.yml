@@ -1,20 +1,41 @@
 ---
+- name: Copy file with owner and permissions
+  copy:
+    src: rabbitmq.repo
+    dest: /etc/yum.repos.d/rabbitmq.repo
+
 - name: Ensure erlang is installed.
   package:
     name: erlang
     state: present
 
-- name: Add packagecloud GPG key.
+- name: Add GPG keys.
   rpm_key:
-    key: "https://packagecloud.io/gpg.key"
+    key: "{{ item }}"
     state: present
+  with_items:
+    - "https://packagecloud.io/gpg.key"
+    - "https://packagecloud.io/rabbitmq/erlang/gpgkey"
+    - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"
+    - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc"
 
-- name: Download RabbitMQ package.
-  get_url:
-    url: "{{ rabbitmq_rpm_url }}"
-    dest: "/tmp/{{ rabbitmq_rpm }}"
+- name: Ensure erlang is installed.
+  package:
+    name: "{{ item }}"
+    state: present  
+  with_items:
+    - erlang 
+    - rabbitmq-server
 
-- name: Ensure RabbitMQ is installed.
-  yum:
-    name: "/tmp/{{ rabbitmq_rpm }}"
-    state: "present"
+- name: Add firewalld rules
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - 15672/tcp
+    - 5672/tcp
+    - 4369/tcp
+    - 25672/tcp
+  notify: Reload firewalld
+  when: rabbit_firewall

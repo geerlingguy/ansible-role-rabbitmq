@@ -1,3 +1,8 @@
 ---
 - name: restart rabbitmq
   service: "name={{ rabbitmq_daemon }} state=restarted"
+
+- name: Reload firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: reloaded

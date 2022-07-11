@@ -11,3 +11,49 @@
     name: "{{ rabbitmq_daemon }}"
     state: "{{ rabbitmq_state }}"
     enabled: "{{ rabbitmq_enabled }}"
+
+- name: Find if {{ rabbit_admin }} user is already created
+  shell: "rabbitmqctl -n rabbit@{{ ansible_nodename }} list_users | grep {{ rabbit_admin }} | wc -l"
+  register: number_of_users
+
+- block: 
+  - name: create {{ rabbit_admin }}  user
+    shell: "rabbitmqctl add_user {{ rabbit_admin }} {{ rabbit_admin_password }}"
+
+  - name: add admin rights
+    shell: "rabbitmqctl set_user_tags {{ rabbit_admin }} administrator"
+  when: 
+    number_of_users.stdout == "0"
+
+- name: enable web admin
+  shell: "rabbitmq-plugins enable rabbitmq_management"
+
+- name: set erlang cookie
+  copy:
+    src: erlang_cookie
+    dest: /var/lib/rabbitmq/.erlang.cookie
+  notify:
+    - restart rabbitmq
+
+# cluster setup
+- block:
+  - name: stop rabbitmq app on all except of {{ rabbit_primary_node }}
+    shell: "rabbitmqctl stop_app -n rabbit@{{ ansible_nodename }}"
+    when:  ansible_hostname != "{{ rabbit_primary_node }}"
+    tags:
+      - rabbit_cluster
+
+  - name: join cluster on {{ rabbit_primary_node }}
+    shell: "rabbitmqctl -n rabbit@{{ ansible_hostname }} join_cluster rabbit@{{ rabbit_primary_node }}"
+    when:  ansible_hostname != "{{ rabbit_primary_node }}"
+    tags:
+      - rabbit_cluster
+
+  - name: start rabbitmq app
+    shell: "rabbitmqctl -n rabbit@{{ ansible_nodename }} start_app"
+    
+  - name: setup HA policy
+    shell: "rabbitmqctl -n rabbit@{{ ansible_nodename }} set_policy ha-all \".*\" '{\"ha-mode\":\"all\"}'"
+    delegate_to: "{{ groups['rabbitmq'] | first }}"
+    run_once: true
+  when: rabbit_primary_node is defined
