@@ -5,14 +5,49 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
+  - name: centos7
+    image: "centos:7"
+    docker_networks:
+      - name: rabbitmq
+        ipam_config:
+          - subnet: '172.26.0.0/16'
+    networks:
+      - name: rabbitmq
+        ipv4_address: '172.26.10.1'
+    etc_hosts: "{'rabbitmq1': '172.26.10.1', 'rabbitmq2': '172.26.10.2'}"
+    tmpfs:
+      - /run
+      - /tmp
+    groups:
+      - rabbitmq
+    command: /lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+    privileged: true
+    pre_build_image: true
+  - name: rocky8
+    image: rockylinux:8
+    networks:
+      - name: rabbitmq
+        ipv4_address: '172.26.10.2'
+    etc_hosts: "{'rabbitmq1': '172.26.10.1', 'rabbitmq2': '172.26.10.2'}"
+    tmpfs:
+      - /run
+      - /tmp
+    command: /lib/systemd/systemd
+    volumes:                                                                                                                                                                    
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
     privileged: true
     pre_build_image: true
 provisioner:
   name: ansible
+  inventory:
+    group_vars:
+      rabbitmq:
+        rabbit_primary_node: rabbitmq1
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}

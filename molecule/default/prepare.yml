@@ -1,0 +1,20 @@
+---                                                                                                                                                                             
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    - name: Install python-firewall
+      yum:                                                                                                                                                                      
+        name: 
+          - python3-firewall
+          - firewalld
+        state: installed
+      when: (ansible_distribution == "Rocky" or ansible_distribution == "CentOs")  and ansible_distribution_major_version == "8"
+
+    - name: Install python-firewall
+      yum:
+        name: 
+          - python-firewall
+          - firewalld
+        state: installed
+      when: ansible_distribution == "CentOs" and ansible_distribution_major_version == "7"
