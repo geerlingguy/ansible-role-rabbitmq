@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/geerlingguy/ansible-role-rabbitmq/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-rabbitmq/actions?query=workflow%3ACI)
 
-Installs RabbitMQ on Linux.
+Installs RabbitMQ on Linux and open ports in firewall (Centos/Rocky/RHEL only)
 
 ## Requirements
 
@@ -32,6 +32,17 @@ The RabbitMQ version to install.
 
 (Debian/Ubuntu only) Controls the .deb to install.
 
+Open firewall ports:
+    rabbit_firewall: true
+
+User with admin rights with password abc
+
+    rabbit_admin: "rabbit_admin"
+    rabbit_admin_password: "abc"
+
+Enable cluster setup:
+    rabbit_primary_node: ansible_nodename of primary node
+    
 ## Dependencies
 
 None.
