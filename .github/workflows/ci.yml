@@ -41,6 +41,7 @@ jobs:
     strategy:
       matrix:
         distro:
+          - rockylinux9
           - rockylinux8
           - ubuntu2004
           - debian11
