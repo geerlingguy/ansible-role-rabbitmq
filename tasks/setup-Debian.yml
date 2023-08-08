@@ -11,17 +11,38 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int >= 18
 
+- name: Download gpg keys and erlang repository
+  block:
+    - name: Download gpg keys for erlang repository updated
+      ansible.builtin.apt_key:
+        id: E495BB49CC4BBE5B
+        url: "{{ erlang_apt_gpg_url }}"
+        keyring: /etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg
+
+    - name: Ensure erlang updated repository is configured
+      ansible.builtin.apt_repository:
+        repo: "{{ erlang_apt_repository }}"
+        state: present
+
+- name: Add rabbitmq apt and keys and repository
+  block:
+    - name: Download gpg keys for rabbitmq-server repository
+      ansible.builtin.apt_key:
+        id: 9F4587F226208342
+        url: "{{ rabbitmq_apt_gpg_url }}"
+        keyring: /etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg
+
+    - name: Ensure rabbitmq-server repository is configured
+      ansible.builtin.apt_repository:
+        repo: "{{ rabbitmq_apt_repository }}"
+        state: present
+
 - name: Ensure erlang is installed.
   package:
     name: erlang
     state: present
 
-- name: Download RabbitMQ package.
-  get_url:
-    url: "{{ rabbitmq_deb_url }}"
-    dest: "/tmp/{{ rabbitmq_deb }}"
-
 - name: Ensure RabbitMQ is installed.
   apt:
-    deb: "/tmp/{{ rabbitmq_deb }}"
+    name: rabbitmq-server={{ rabbitmq_version }}-1
     state: present
