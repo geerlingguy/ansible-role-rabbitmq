@@ -27,10 +27,12 @@ The RabbitMQ version to install.
 
 (RedHat/CentOS only) Controls the .rpm to install.
 
-    rabbitmq_deb: "rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
-    rabbitmq_deb_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}/{{ rabbitmq_deb }}/download"
+    rabbitmq_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    rabbitmq_apt_gpg_url: "https://ppa.novemberain.com/gpg.9F4587F226208342.key"
 
-(Debian/Ubuntu only) Controls the .deb to install.
+    erlang_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg] https://ppa2.novemberain.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    erlang_apt_gpg_url: "https://ppa.novemberain.com/gpg.E495BB49CC4BBE5B.key"
+(Debian/Ubuntu only) Controls the repository configuration for the installation
 
 ## Dependencies
 
