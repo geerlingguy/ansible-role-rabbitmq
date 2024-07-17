@@ -41,7 +41,8 @@ jobs:
     strategy:
       matrix:
         distro:
-          - rockylinux9
+          # See: https://github.com/geerlingguy/ansible-role-rabbitmq/issues/21
+          # - rockylinux9
           - ubuntu2004
           - debian11
 
