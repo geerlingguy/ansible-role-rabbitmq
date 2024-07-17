@@ -9,7 +9,6 @@
     key: "{{ item }}"
     state: present
   with_items:
-    - "https://packagecloud.io/gpg.key"
     - "https://packagecloud.io/rabbitmq/erlang/gpgkey"
     - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"
     - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc"
