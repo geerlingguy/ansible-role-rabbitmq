@@ -12,26 +12,35 @@ Installs RabbitMQ on Linux.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    rabbitmq_daemon: rabbitmq-server
-    rabbitmq_state: started
-    rabbitmq_enabled: true
+```yaml
+rabbitmq_daemon: rabbitmq-server
+rabbitmq_state: started
+rabbitmq_enabled: true
+```
 
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
-    rabbitmq_version: "3.9.13"
+```yaml
+rabbitmq_version: "3.9.13"
+```
 
 The RabbitMQ version to install.
 
-    rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
-    rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+```yaml
+rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
+rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+```
 
 (RedHat/CentOS only) Controls the .rpm to install.
 
-    rabbitmq_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-    rabbitmq_apt_gpg_url: "https://ppa.novemberain.com/gpg.9F4587F226208342.key"
+```yaml
+rabbitmq_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+rabbitmq_apt_gpg_url: "https://ppa.novemberain.com/gpg.9F4587F226208342.key"
 
-    erlang_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg] https://ppa2.novemberain.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-    erlang_apt_gpg_url: "https://ppa.novemberain.com/gpg.E495BB49CC4BBE5B.key"
+erlang_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg] https://ppa2.novemberain.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+erlang_apt_gpg_url: "https://ppa.novemberain.com/gpg.E495BB49CC4BBE5B.key"
+```
+
 (Debian/Ubuntu only) Controls the repository configuration for the installation
 
 ## Dependencies
@@ -40,11 +49,13 @@ None.
 
 ## Example Playbook
 
-    - hosts: rabbitmq
-      roles:
-        - name: geerlingguy.repo-epel
-          when: ansible_os_family == 'RedHat'
-        - geerlingguy.rabbitmq
+```yaml
+- hosts: rabbitmq
+  roles:
+    - name: geerlingguy.repo-epel
+      when: ansible_os_family == 'RedHat'
+    - geerlingguy.rabbitmq
+```
 
 ## License
 
