@@ -4,6 +4,11 @@
     name: erlang
     state: present
 
+- name: Get current crypto policy
+  command: update-crypto-policies --show
+  register: current_crypto_policy
+  changed_when: false
+
 - name: Ensure legacy crypto policies
   command: update-crypto-policies --set LEGACY
   when: ansible_distribution_major_version | int > 8
@@ -19,7 +24,7 @@
     - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc"
 
 - name: Rollback legacy crypto policies
-  command: update-crypto-policies --set DEFAULT
+  command: update-crypto-policies --set "{{ current_crypto_policy.stdout }}"
   when: ansible_distribution_major_version | int > 8
 
 - name: Download RabbitMQ package.
