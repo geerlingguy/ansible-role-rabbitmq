@@ -2,10 +2,10 @@
 # See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199 and
 # https://github.com/geerlingguy/ansible-role-java/issues/64
 - name: Ensure 'man' directory exists.
-  file:  # noqa 208
+  ansible.builtin.file: # noqa risky-file-permissions
     path: /usr/share/man/man1
     state: directory
-    mode: 0755
+    mode: "0755"
     recurse: true
   when:
     - ansible_distribution == 'Ubuntu'
@@ -38,11 +38,11 @@
         state: present
 
 - name: Ensure erlang is installed.
-  package:
+  ansible.builtin.package:
     name: erlang
     state: present
 
 - name: Ensure RabbitMQ is installed.
-  apt:
+  ansible.builtin.apt:
     name: rabbitmq-server={{ rabbitmq_version }}-1
     state: present
