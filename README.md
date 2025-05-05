@@ -21,7 +21,7 @@ rabbitmq_enabled: true
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
 ```yaml
-rabbitmq_version: "3.9.13"
+rabbitmq_version: "3.12.2"
 ```
 
 The RabbitMQ version to install.
@@ -35,11 +35,11 @@ rabbitmq_rpm_gpg_url: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
 (RedHat/CentOS only) Controls the .rpm to install.
 
 ```yaml
-rabbitmq_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-rabbitmq_apt_gpg_url: "https://ppa.novemberain.com/gpg.9F4587F226208342.key"
+rabbitmq_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }}"
+rabbitmq_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key"
 
-erlang_apt_repository: "deb [signed-by=/etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg] https://ppa2.novemberain.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-erlang_apt_gpg_url: "https://ppa.novemberain.com/gpg.E495BB49CC4BBE5B.key"
+erlang_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }}"
+erlang_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key"
 ```
 
 (Debian/Ubuntu only) Controls the repository configuration for the installation

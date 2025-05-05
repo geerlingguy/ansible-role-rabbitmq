@@ -11,31 +11,36 @@
     - ansible_distribution == 'Ubuntu'
     - ansible_distribution_major_version | int >= 18
 
-- name: Download gpg keys and erlang repository
-  block:
-    - name: Download gpg keys for erlang repository updated
-      ansible.builtin.apt_key:
-        id: E495BB49CC4BBE5B
-        url: "{{ erlang_apt_gpg_url }}"
-        keyring: /etc/apt/trusted.gpg.d/erlang-E495BB49CC4BBE5B.gpg
+- name: Add Erlang repository
+  ansible.builtin.deb822_repository:
+    components: main
+    name: erlang
+    signed_by: "{{ erlang_apt_gpg_url }}"
+    suites: "{{ ansible_distribution_release }}"
+    uris: ["{{ erlang_apt_repository }}"]
+    types: deb
 
-    - name: Ensure erlang updated repository is configured
-      ansible.builtin.apt_repository:
-        repo: "{{ erlang_apt_repository }}"
-        state: present
+- name: Add RabbitMQ repository
+  ansible.builtin.deb822_repository:
+    components: main
+    name: rabbitmq
+    signed_by: "{{ rabbitmq_apt_gpg_url }}"
+    suites: "{{ ansible_distribution_release }}"
+    uris: ["{{ rabbitmq_apt_repository }}"]
+    types: deb
 
-- name: Add rabbitmq apt and keys and repository
-  block:
-    - name: Download gpg keys for rabbitmq-server repository
-      ansible.builtin.apt_key:
-        id: 9F4587F226208342
-        url: "{{ rabbitmq_apt_gpg_url }}"
-        keyring: /etc/apt/trusted.gpg.d/rabbitmq-9F4587F226208342.gpg
+# https://www.rabbitmq.com/docs/which-erlang
+- name: Setup Erlang version pin
+  ansible.builtin.template:
+    src: apt_pin.j2
+    dest: "/etc/apt/preferences.d/erlang"
+    owner: root
+    group: root
+    mode: 0644
 
-    - name: Ensure rabbitmq-server repository is configured
-      ansible.builtin.apt_repository:
-        repo: "{{ rabbitmq_apt_repository }}"
-        state: present
+- name: Update apt cache.
+  apt: update_cache=true
+  when: ansible_os_family == 'Debian'
 
 - name: Ensure erlang is installed.
   ansible.builtin.package:

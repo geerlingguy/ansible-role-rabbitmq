@@ -1,0 +1,8 @@
+# https://www.rabbitmq.com/docs/which-erlang
+Package: erlang*
+{% if rabbitmq_version is version('3.12.10', '>=') %}
+Pin: version 1:26.2.5.9-1
+{% else %}
+Pin: version 1:25.3.2.18-1
+{% endif %}
+Pin-Priority: 1001
