@@ -27,8 +27,9 @@ rabbitmq_version: "3.9.13"
 The RabbitMQ version to install.
 
 ```yaml
-rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el{{ ansible_distribution_major_version }}.noarch.rpm"
-rabbitmq_rpm_url: "https://packagecloud.io/rabbitmq/rabbitmq-server/packages/el/{{ ansible_distribution_major_version }}/{{ rabbitmq_rpm }}/download"
+rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el8.noarch.rpm"
+rabbitmq_rpm_url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmq_version }}/{{ rabbitmq_rpm }}"
+rabbitmq_rpm_gpg_url: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
 ```
 
 (RedHat/CentOS only) Controls the .rpm to install.
