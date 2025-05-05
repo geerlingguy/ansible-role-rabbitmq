@@ -5,13 +5,15 @@
 
   pre_tasks:
     - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
+      apt:
+        update_cache: true
+        cache_valid_time: 600
       when: ansible_os_family == 'Debian'
 
-    - name: Add python3-debian
-      when: ansible_os_family == 'Debian'
+    - name: Add python3-debian dependency.
       apt:
-        name: [python3-debian]
+        name: python3-debian
+      when: ansible_os_family == 'Debian'
 
   roles:
     - role: geerlingguy.rabbitmq
