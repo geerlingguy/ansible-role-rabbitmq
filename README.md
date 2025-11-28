@@ -35,10 +35,10 @@ rabbitmq_rpm_gpg_url: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
 (RedHat/CentOS only) Controls the .rpm to install.
 
 ```yaml
-rabbitmq_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-server/deb/{{ ansible_distribution | lower }}"
+rabbitmq_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-server/deb/{{ ansible_facts.distribution | lower }}"
 rabbitmq_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key"
 
-erlang_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_distribution | lower }}"
+erlang_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_facts.distribution | lower }}"
 erlang_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key"
 ```
 
@@ -54,7 +54,7 @@ None.
 - hosts: rabbitmq
   roles:
     - name: geerlingguy.repo-epel
-      when: ansible_os_family == 'RedHat'
+      when: ansible_facts.os_family == 'RedHat'
     - geerlingguy.rabbitmq
 ```
 
