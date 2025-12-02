@@ -35,14 +35,16 @@ rabbitmq_rpm_gpg_url: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
 (RedHat/CentOS only) Controls the .rpm to install.
 
 ```yaml
-rabbitmq_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-server/deb/{{ ansible_facts.distribution | lower }}"
-rabbitmq_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key"
-
-erlang_apt_repository: "https://ppa1.rabbitmq.com/rabbitmq/rabbitmq-erlang/deb/{{ ansible_facts.distribution | lower }}"
-erlang_apt_gpg_url: "https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key"
+rabbitmq_apt_repository: "https://deb1.rabbitmq.com/rabbitmq-server/{{ ansible_facts.distribution | lower }}/{{ ansible_facts.distribution_release }}"
+erlang_apt_repository: "https://deb1.rabbitmq.com/rabbitmq-erlang/{{ ansible_facts.distribution | lower }}/{{ ansible_facts.distribution_release }}"
+rabbitmq_apt_keyring_path: "/usr/share/keyrings/com.rabbitmq.team.gpg"
+rabbitmq_apt_key_fingerprint: "0A9AF2115F4687BD29803A206B73A36E6026DFCA"
 ```
 
-(Debian/Ubuntu only) Controls the repository configuration for the installation
+(Debian/Ubuntu only) Controls the repository configuration for the installation.
+The role uses RabbitMQ's `deb1` mirror plus the Team RabbitMQ signing key by
+default. If `rabbitmq_apt_keyring_path` is unset, the role falls back to the
+legacy `rabbitmq_apt_gpg_url` / `erlang_apt_gpg_url` locations instead.
 
 ## Dependencies
 

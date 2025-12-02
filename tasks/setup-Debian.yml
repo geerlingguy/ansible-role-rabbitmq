@@ -1,7 +1,7 @@
 ---
 # See: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199 and
 # https://github.com/geerlingguy/ansible-role-java/issues/64
-- name: Ensure 'man' directory exists.
+- name: Ensure 'man' directory exists
   ansible.builtin.file: # noqa risky-file-permissions
     path: /usr/share/man/man1
     state: directory
@@ -11,11 +11,43 @@
     - ansible_facts.distribution == 'Ubuntu'
     - ansible_facts.distribution_major_version | int >= 18
 
+- name: Ensure APT transport and GnuPG are present
+  ansible.builtin.package:
+    name:
+      - curl
+      - gnupg
+      - apt-transport-https
+    state: present
+  when: ansible_facts.os_family == 'Debian'
+
+- name: Ensure RabbitMQ signing key directory exists
+  ansible.builtin.file:
+    path: "{{ rabbitmq_apt_keyring_path | dirname }}"
+    state: directory
+    mode: "0755"
+  when: rabbitmq_apt_keyring_path is defined
+
+- name: Download RabbitMQ APT signing key
+  ansible.builtin.get_url:
+    url: "{{ rabbitmq_apt_key_source | default(rabbitmq_apt_gpg_url) }}"
+    dest: /tmp/rabbitmq-team.asc
+    mode: "0644"
+  register: rabbitmq_apt_key_download
+  when: rabbitmq_apt_keyring_path is defined
+
+- name: Install RabbitMQ APT signing key
+  ansible.builtin.command: >
+    gpg --dearmor --yes -o "{{ rabbitmq_apt_keyring_path }}" /tmp/rabbitmq-team.asc
+  when:
+    - rabbitmq_apt_keyring_path is defined
+    - rabbitmq_apt_key_download is defined
+    - rabbitmq_apt_key_download.changed
+
 - name: Add Erlang repository
   ansible.builtin.deb822_repository:
     components: main
     name: erlang
-    signed_by: "{{ erlang_apt_gpg_url }}"
+    signed_by: "{{ rabbitmq_apt_keyring_path | default(erlang_apt_gpg_url) }}"
     suites: "{{ ansible_facts.distribution_release }}"
     uris: ["{{ erlang_apt_repository }}"]
     types: deb
@@ -24,7 +56,7 @@
   ansible.builtin.deb822_repository:
     components: main
     name: rabbitmq
-    signed_by: "{{ rabbitmq_apt_gpg_url }}"
+    signed_by: "{{ rabbitmq_apt_keyring_path | default(rabbitmq_apt_gpg_url) }}"
     suites: "{{ ansible_facts.distribution_release }}"
     uris: ["{{ rabbitmq_apt_repository }}"]
     types: deb
@@ -38,16 +70,16 @@
     group: root
     mode: 0644
 
-- name: Update apt cache.
+- name: Update apt cache
   apt: update_cache=true
   when: ansible_facts.os_family == 'Debian'
 
-- name: Ensure erlang is installed.
+- name: Ensure erlang is installed
   ansible.builtin.package:
     name: erlang
     state: present
 
-- name: Ensure RabbitMQ is installed.
+- name: Ensure RabbitMQ is installed
   ansible.builtin.apt:
     name: rabbitmq-server={{ rabbitmq_version }}-1
     state: present
