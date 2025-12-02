@@ -3,7 +3,7 @@ rabbitmq_daemon: rabbitmq-server
 rabbitmq_state: started
 rabbitmq_enabled: true
 
-rabbitmq_version: "3.12.2"
+rabbitmq_version: "3.12.14"
 
 rabbitmq_rpm: "rabbitmq-server-{{ rabbitmq_version }}-1.el8.noarch.rpm"
 rabbitmq_rpm_url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmq_version }}/{{ rabbitmq_rpm }}"

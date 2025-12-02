@@ -21,7 +21,7 @@ rabbitmq_enabled: true
 Controls the RabbitMQ daemon's state and whether it starts at boot.
 
 ```yaml
-rabbitmq_version: "3.12.2"
+rabbitmq_version: "3.12.14"
 ```
 
 The RabbitMQ version to install.
