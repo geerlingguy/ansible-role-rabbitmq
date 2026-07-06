@@ -11,6 +11,11 @@
     - ansible_facts.distribution == 'Ubuntu'
     - ansible_facts.distribution_major_version | int >= 18
 
+- name: Ensure deb822 repository dependency is installed.
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+
 - name: Add Erlang repository
   ansible.builtin.deb822_repository:
     components: main
